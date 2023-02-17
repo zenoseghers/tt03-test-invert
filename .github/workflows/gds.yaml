@@ -50,9 +50,9 @@ jobs:
         -v $PDK_ROOT:$PDK_ROOT
         -v $(pwd):/work
         -e PDK_ROOT=$PDK_ROOT
-        -e PDK=$(PDK)
+        -e PDK=$PDK
         -u $(id -u $USER):$(id -g $USER)
-        efabless/openlane:$(OPENLANE_COMMIT)-amd64
+        efabless/openlane:$OPENLANE_COMMIT-amd64
         /bin/bash -c "./flow.tcl -verbose 2 -overwrite -design /work/src -run_path /work/runs -tag wokwi"
 
     # for debugging, show all the files
