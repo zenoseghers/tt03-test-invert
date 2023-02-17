@@ -248,8 +248,8 @@ jobs:
         PAGE_URL=${{ needs.pages.outputs.page_url }}
         PAGE_URL=$(echo "$PAGE_URL" | sed -e 's/\/$//')
         cat << EOF >> $GITHUB_STEP_SUMMARY
-        # layout
+        # 3D Viewer
+        [open 3D viewer](https://gds-viewer.tinytapeout.com/?model=$PAGE_URL/tinytapeout.gds.gltf)
+        # 2D Preview
         ![png]($PAGE_URL/gds_render.png)
-        # viewer
-        [open preview](https://gds-viewer.tinytapeout.com/?model=$PAGE_URL/tinytapeout.gds.gltf)
         EOF
