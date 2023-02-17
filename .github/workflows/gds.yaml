@@ -59,6 +59,10 @@ jobs:
     - name: show files
       run: find runs/wokwi/
 
+    # yosys warnings
+    - name: yosys warnings
+      run: ./configure.py --get-warnings >> $GITHUB_STEP_SUMMARY
+
     # print some routing stats
     - name: add summary
       run: ./configure.py --get-stats >> $GITHUB_STEP_SUMMARY
@@ -67,7 +71,7 @@ jobs:
     - name: cell usage summary
       run: |
         git clone https://github.com/TinyTapeout/sssummarizer
-        sssummarizer/sssummarizer.py --gl runs/wokwi/results/final/verilog/gl/*.v --print-category >> $GITHUB_STEP_SUMMARY
+        sssummarizer/sssummarizer.py --gl runs/wokwi/results/final/verilog/gl/*.nl.v --print-category >> $GITHUB_STEP_SUMMARY
 
     - name: populate src cache
       uses: actions/cache@v3

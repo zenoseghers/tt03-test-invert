@@ -146,6 +146,20 @@ def get_top_module(yaml):
         return yaml['project']['top_module']
 
 
+def get_warnings():
+    warnings = []
+    with open('runs/wokwi/logs/synthesis/1-synthesis.log') as f:
+        for line in f.readlines():
+            if line.startswith('Warning:'):
+                # bogus warning https://github.com/YosysHQ/yosys/commit/bfacaddca8a2e113e4bc3d6177612ccdba1555c8
+                if 'WIDTHLABEL' not in line:
+                    warnings.append(line.strip())
+    if len(warnings):
+        print('# Synthesis warnings')
+        print()
+        for warning in warnings:
+            print(f'* {warning}')
+
 def get_stats():
     with open('runs/wokwi/reports/metrics.csv') as f:
         report = list(csv.DictReader(f))[0]
@@ -163,6 +177,7 @@ if __name__ == '__main__':
     parser.add_argument('--check-docs', help="check the documentation part of the yaml", action="store_const", const=True)
     parser.add_argument('--build-pdf', help="build a single page PDF", action="store_const", const=True)
     parser.add_argument('--get-stats', help="print some stats from the run", action="store_const", const=True)
+    parser.add_argument('--get-warnings', help="print any warnings", action="store_const", const=True)
     parser.add_argument('--create-user-config', help="create the user_config.tcl file with top module and source files", action="store_const", const=True)
     parser.add_argument('--debug', help="debug logging", action="store_const", dest="loglevel", const=logging.DEBUG, default=logging.INFO)
     parser.add_argument('--yaml', help="yaml file to load", default='info.yaml')
@@ -183,6 +198,9 @@ if __name__ == '__main__':
 
     if args.get_stats:
         get_stats()
+
+    if args.get_warnings:
+        get_warnings()
 
     elif args.check_docs:
         logging.info("checking docs")
