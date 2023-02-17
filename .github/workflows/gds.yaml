@@ -26,8 +26,9 @@ jobs:
     - name: openlane & pdk
       run: |
         cd $HOME
-        git clone --depth 1 https://github.com/The-OpenROAD-Project/OpenLane.git openlane -b $OPENLANE_COMMIT
+        git clone --depth 1 https://github.com/The-OpenROAD-Project/OpenLane.git openlane 
         cd openlane
+        git checkout $OPENLANE_COMMIT
         make
 
     # need python
