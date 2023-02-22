@@ -8,7 +8,6 @@ permissions:
 jobs:
   gds:
     env:
-        OPENLANE_COMMIT: 4cd0986b3ae550cdf7a6d0fba4e0657012f635d8
         OPENLANE_ROOT:  /home/runner/openlane
         PDK_ROOT:       /home/runner/pdk
         PDK:            sky130B
@@ -33,11 +32,12 @@ jobs:
       with:
         repository: The-OpenROAD-Project/OpenLane
         path: openlane
-        ref: $OPENLANE_COMMIT
+        ref: 4cd0986b3ae550cdf7a6d0fba4e0657012f635d8
 
     # build openlane and pdk
     - name: openlane & pdk
       run: |
+        pwd
         cd openlane
         git log  --pretty=oneline | head
         make
