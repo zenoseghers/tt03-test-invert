@@ -41,6 +41,7 @@ jobs:
         cd $HOME
         git clone --depth 1 https://github.com/The-OpenROAD-Project/OpenLane.git openlane 
         cd openlane
+        git log
         git checkout $OPENLANE_COMMIT
         make
 

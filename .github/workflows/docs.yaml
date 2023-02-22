@@ -40,7 +40,7 @@ jobs:
 
     # fetch the Verilog from Wokwi API
     - name: build pdf
-      run: ./tt/tt_tool.py --check-docs --build-pdf
+      run: ./tt/tt_tool.py --check-docs --create-pdf
 
     # archive the PDF
     - name: Archive PDF
