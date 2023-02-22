@@ -46,7 +46,7 @@ jobs:
       run: |
         cd openlane
         git log | wc -l
-        git log  --pretty=oneline | head 10
+        git log  --pretty=oneline | head
         git log | grep $OPENLANE_COMMIT
         git checkout $OPENLANE_COMMIT
         make
