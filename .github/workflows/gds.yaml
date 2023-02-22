@@ -8,9 +8,11 @@ permissions:
 jobs:
   gds:
     env:
-        OPENLANE_ROOT:  /home/runner/openlane
-        PDK_ROOT:       /home/runner/pdk
-        PDK:            sky130B
+        OPENLANE_TAG:       2023.02.14
+        OPENLANE_COMMIT:    4cd0986b3ae550cdf7a6d0fba4e0657012f635d8
+        OPENLANE_ROOT:      /home/runner/openlane
+        PDK_ROOT:           /home/runner/pdk
+        PDK:                sky130B
 
     # ubuntu
     runs-on: ubuntu-latest
@@ -28,18 +30,9 @@ jobs:
         path: tt
 
     - name: openlane repo
-      uses: actions/checkout@v3
-      with:
-        repository: The-OpenROAD-Project/OpenLane
-        path: openlane
-        ref: 4cd0986b3ae550cdf7a6d0fba4e0657012f635d8
-
-    # build openlane and pdk
-    - name: openlane & pdk
       run: |
-        pwd
-        cd openlane
-        git log  --pretty=oneline | head
+        git clone --depth=1 --branch $OPENLANE_TAG https://github.com/The-OpenROAD-Project/OpenLane.git $OPENLANE_ROOT
+        cd $OPENLANE_ROOT
         make
 
     # need python
