@@ -33,20 +33,13 @@ jobs:
       with:
         repository: The-OpenROAD-Project/OpenLane
         path: openlane
-
-    - name: sanity check git
-      run: |
-        cd tt
-        git log --pretty=oneline | head
+        ref: $OPENLANE_COMMIT
 
     # build openlane and pdk
     - name: openlane & pdk
       run: |
         cd openlane
-        git log | wc -l
         git log  --pretty=oneline | head
-        git log | grep $OPENLANE_COMMIT
-        #git checkout $OPENLANE_COMMIT
         make
 
     # need python
