@@ -14,16 +14,17 @@ jobs:
     - name: checkout repo
       uses: actions/checkout@v3
 
+    - name: checkout tt tools repo
+      uses: actions/checkout@v3
+      with:
+        repository: tinytapeout/tt-support-tools
+
     # need python
     - name: setup python
       uses: actions/setup-python@v4
       with:
         python-version: '3.10'
-    - run: pip install requests PyYAML
-
-    # fetch the Verilog from Wokwi API
-    - name: fetch Verilog and build config
-      run: ./configure.py --check-docs
+    - run: pip install -r tt-support-tools/requirements.txt
 
     # pandoc deps
     - name: Pandoc deps
@@ -32,15 +33,8 @@ jobs:
         sudo apt-get install -y pandoc texlive-xetex
 
     # fetch the Verilog from Wokwi API
-    - name: build datasheet
-      run: ./configure.py --build-pdf
-
-    # make an artifact
-    - name: upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-          name: docs
-          path: info.yaml
+    - name: build pdf
+      run: ./tt-support-tools/tt_tool.py --check-docs --build-pdf
 
     # archive the PDF
     - name: Archive PDF
