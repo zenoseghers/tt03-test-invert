@@ -28,6 +28,12 @@ jobs:
         repository: tinytapeout/tt-support-tools
         path: tt
 
+    - name: openlane repo
+      uses: actions/checkout@v3
+      with:
+        repository: The-OpenROAD-Project/OpenLane
+        path: openlane
+
     # need python
     - name: setup python
       uses: actions/setup-python@v4
@@ -38,8 +44,6 @@ jobs:
     # build openlane and pdk
     - name: openlane & pdk
       run: |
-        cd $HOME
-        git clone --depth 1 https://github.com/The-OpenROAD-Project/OpenLane.git openlane 
         cd openlane
         git log
         git checkout $OPENLANE_COMMIT
