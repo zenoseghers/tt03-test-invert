@@ -14,10 +14,15 @@ jobs:
     - name: checkout repo
       uses: actions/checkout@v3
 
+    # tt tools
     - name: checkout tt tools repo
       uses: actions/checkout@v3
       with:
         repository: tinytapeout/tt-support-tools
+
+    # for debugging, show all the files
+    - name: show files
+      run: find .
 
     # need python
     - name: setup python
