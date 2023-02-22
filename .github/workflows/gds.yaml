@@ -45,7 +45,9 @@ jobs:
     - name: openlane & pdk
       run: |
         cd openlane
-        git log  --pretty=oneline | tail -n 10
+        git log | wc -l
+        git log  --pretty=oneline | head 10
+        git log | grep $OPENLANE_COMMIT
         git checkout $OPENLANE_COMMIT
         make
 
