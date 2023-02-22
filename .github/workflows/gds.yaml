@@ -29,12 +29,6 @@ jobs:
         repository: tinytapeout/tt-support-tools
         path: tt
 
-    - name: openlane repo
-      run: |
-        git clone --depth=1 --branch $OPENLANE_TAG https://github.com/The-OpenROAD-Project/OpenLane.git $OPENLANE_ROOT
-        cd $OPENLANE_ROOT
-        make
-
     # need python
     - name: setup python
       uses: actions/setup-python@v4
@@ -45,6 +39,13 @@ jobs:
     # fetch the Verilog from Wokwi API
     - name: fetch Verilog and build config
       run: ./tt/tt_tool.py --create-user-config
+
+    # build OpenLane
+    - name: openlane repo
+      run: |
+        git clone --depth=1 --branch $OPENLANE_TAG https://github.com/The-OpenROAD-Project/OpenLane.git $OPENLANE_ROOT
+        cd $OPENLANE_ROOT
+        make
 
     # run OpenLane to build the GDS
     - name: make GDS
@@ -57,7 +58,7 @@ jobs:
         -e PDK=$PDK
         -u $(id -u $USER):$(id -g $USER)
         efabless/openlane:$OPENLANE_COMMIT-amd64
-        /bin/bash -c "./flow.tcl -verbose 2 -overwrite -design /work/src -run_path /work/runs -tag wokwi"
+        /bin/bash -c "./flow.tcl -verbose 1 -overwrite -design /work/src -run_path /work/runs -tag wokwi"
 
     # for debugging, show all the files
     - name: show files
@@ -73,7 +74,7 @@ jobs:
 
     # print some cell stats
     - name: cell usage summary
-      run: ./tt/tt_tool.py --print-category >> $GITHUB_STEP_SUMMARY
+      run: ./tt/tt_tool.py --print-cell-category >> $GITHUB_STEP_SUMMARY
 
     - name: populate src cache
       uses: actions/cache@v3
