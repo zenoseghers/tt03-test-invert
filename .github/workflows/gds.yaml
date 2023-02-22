@@ -205,7 +205,6 @@ jobs:
 
   pages:
     needs:
-    - png
     - viewer
     environment:
       name: github-pages
